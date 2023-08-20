@@ -5,6 +5,7 @@ import Footer from "@/components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "@/consts";
 import { getCollection } from "astro:content";
 import FormattedDate from "@/components/FormattedDate.astro";
+import MainProse from "@/components/MainProse.astro";
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
@@ -18,8 +19,8 @@ const posts = (await getCollection("blog")).sort(
   </head>
   <body>
     <Header />
-    <main class="mt-4">
-      <section class="prose mx-auto dark:prose-invert">
+    <MainProse>
+      <section>
         <ul class="divide-y dark:divide-gray-700">
           {
             posts.map((post) => (
@@ -41,7 +42,7 @@ const posts = (await getCollection("blog")).sort(
           }
         </ul>
       </section>
-    </main>
+    </MainProse>
     <Footer />
   </body>
 </html>

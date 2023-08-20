@@ -15,11 +15,10 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   <head>
     <BaseHead title={title} description={description} />
   </head>
-
   <body>
     <Header />
     <MainProse>
-      <article class="prose prose-lg mx-auto dark:prose-invert">
+      <article>
         <div>
           {
             heroImage && (

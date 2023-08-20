@@ -3,10 +3,8 @@ import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE } from "@/consts";
 ---
 
-<header>
-  <nav
-    class="flex items-center justify-between border-b bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900"
-  >
+<header class="border-b bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900">
+  <nav class="mx-auto flex max-w-4xl items-center justify-between">
     <h2 class="font-mono"><a href="/">{SITE_TITLE}</a></h2>
     <div class="flex justify-around divide-x">
       <HeaderLink href="/">Home</HeaderLink>

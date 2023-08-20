@@ -1,5 +1,11 @@
 <main
-  class="prose prose-lg mx-auto mt-8 dark:prose-invert prose-code:rounded prose-code:bg-gray-200 prose-code:p-1 prose-code:before:content-[''] prose-code:after:content-[''] dark:prose-code:bg-gray-700"
+  class="prose prose-lg mx-auto mt-8 px-2 dark:prose-invert prose-blockquote:not-italic prose-strong:font-bold prose-code:rounded prose-code:bg-gray-200 prose-code:box-decoration-clone prose-code:p-1 prose-code:before:content-none prose-code:after:content-none prose-pre:px-2 dark:prose-code:bg-gray-700"
 >
   <slot />
 </main>
+
+<style is:global>
+  pre code {
+    background-color: unset !important;
+  }
+</style>
