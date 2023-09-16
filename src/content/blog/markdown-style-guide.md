@@ -12,8 +12,8 @@ Here is a sample of some basic Markdown syntax that can be used when writing Mar
 - [Headings](#headings)
 - [Paragraph](#paragraph)
 - [Images](#images)
-    - [Syntax](#syntax)
-    - [Output](#output)
+  - [Syntax](#syntax)
+  - [Output](#output)
 - [Blockquotes](#blockquotes)
   - [Blockquote without attribution](#blockquote-without-attribution)
   - [Blockquote with attribution](#blockquote-with-attribution)
@@ -117,7 +117,7 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
 
 ````markdown
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -133,7 +133,7 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
 #### Output <!-- omit from toc -->
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -145,7 +145,7 @@ we can use 3 backticks ``` in new line and write snippet and close with 3 backti
 </html>
 ```
 
-## Lists
+## [Lists](#lists)
 
 ### Ordered List
 

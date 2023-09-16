@@ -21,9 +21,9 @@ const posts = (await getCollection("blog")).sort(
     <Header />
     <MainProse>
       <section>
-        <ul class="divide-y dark:divide-gray-700">
+        <ul class="divide-y pr-7 dark:divide-gray-700">
           {
-            posts.map((post) => (
+             posts.map((post) => (
               <li>
                 <a href={`/blog/${post.slug}/`}>
                   <img
