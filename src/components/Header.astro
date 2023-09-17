@@ -4,14 +4,12 @@ import { SITE_TITLE } from "@/consts";
 ---
 
 <>
-  <div class="h-12 md:hidden"></div>
+  <div class="h-12"></div>
   <header
-    class="fixed top-0 w-full border-b bg-gray-50 dark:border-gray-700 dark:bg-gray-900 md:static"
+    class="fixed top-0 w-full border-b bg-gray-50 pl-[calc(100vw-100%)] dark:border-gray-700 dark:bg-gray-900"
   >
     <!-- Desktop Nav -->
-    <nav
-      class="mx-auto hidden max-w-4xl items-center justify-between p-4 md:flex"
-    >
+    <nav class="mx-auto flex max-w-4xl items-center justify-between p-4">
       <a class="font-mono" href="/">{SITE_TITLE}</a>
       <div class="flex justify-around divide-x">
         <HeaderLink href="/">Home</HeaderLink>
@@ -50,7 +48,7 @@ import { SITE_TITLE } from "@/consts";
     </nav>
     <!-- End Desktop Nav -->
     <!-- Mobile Nav -->
-    <nav class="flex h-12 items-center justify-between px-2 md:hidden">
+    <!-- <nav class="flex h-12 items-center justify-between px-2 md:hidden">
       <a class="font-mono" href="/">{SITE_TITLE}</a>
       <div>
         <div
@@ -65,36 +63,42 @@ import { SITE_TITLE } from "@/consts";
           <HeaderLink href="/about">About</HeaderLink>
         </div>
       </div>
-    </nav>
+    </nav> -->
   </header>
 </>
 
-<script is:inline>
-  const themeButton = document.getElementById("theme-toggle");
-  const themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
-  const themeToggleLightIcon = document.getElementById(
-    "theme-toggle-light-icon",
-  );
-  let currentTheme = window.localStorage.getItem("theme");
-
-  if (currentTheme === "dark") {
-    themeToggleDarkIcon.classList.remove("hidden");
-  } else {
-    themeToggleLightIcon.classList.remove("hidden");
-  }
-
-  themeButton.addEventListener("click", () => {
-    themeToggleDarkIcon.classList.toggle("hidden");
-    themeToggleLightIcon.classList.toggle("hidden");
+<script>
+  const setupThemeButton = () => {
+    const themeButton = document.getElementById("theme-toggle");
+    const themeToggleDarkIcon = document.getElementById(
+      "theme-toggle-dark-icon",
+    );
+    const themeToggleLightIcon = document.getElementById(
+      "theme-toggle-light-icon",
+    );
+    let currentTheme = window.localStorage.getItem("theme");
 
     if (currentTheme === "dark") {
-      window.localStorage.setItem("theme", "light");
-      document.documentElement.classList.remove("dark");
-      currentTheme = "light";
+      themeToggleDarkIcon?.classList.remove("hidden");
     } else {
-      window.localStorage.setItem("theme", "dark");
-      document.documentElement.classList.add("dark");
-      currentTheme = "dark";
+      themeToggleLightIcon?.classList.remove("hidden");
     }
-  });
+
+    themeButton?.addEventListener("click", () => {
+      themeToggleDarkIcon?.classList.toggle("hidden");
+      themeToggleLightIcon?.classList.toggle("hidden");
+
+      if (currentTheme === "dark") {
+        window.localStorage.setItem("theme", "light");
+        document.documentElement.classList.remove("dark");
+        currentTheme = "light";
+      } else {
+        window.localStorage.setItem("theme", "dark");
+        document.documentElement.classList.add("dark");
+        currentTheme = "dark";
+      }
+    });
+  };
+  setupThemeButton();
+  document.addEventListener("astro:after-swap", setupThemeButton);
 </script>
