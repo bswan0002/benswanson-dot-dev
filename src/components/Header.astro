@@ -8,12 +8,16 @@ import { SITE_TITLE } from "@/consts";
   <header
     class="fixed top-0 w-full border-b bg-gray-50 pl-[calc(100vw-100%)] dark:border-gray-700 dark:bg-gray-900"
   >
-    <!-- Desktop Nav -->
-    <nav class="mx-auto flex max-w-4xl items-center justify-between p-4">
-      <a class="font-mono" href="/">{SITE_TITLE}</a>
-      <div class="flex justify-around divide-x">
-        <HeaderLink href="/">Home</HeaderLink>
-        <HeaderLink href="/blog">Blog</HeaderLink>
+    <nav
+      class="mx-auto flex max-w-4xl items-center justify-between px-0 py-2 sm:p-4"
+      style="scrollbar"
+    >
+      <a class="w-20 font-mono sm:w-auto" href="/">{SITE_TITLE}</a>
+      <div class="flex justify-around sm:divide-x">
+        <HeaderLink class="hidden sm:block" href="/">Home</HeaderLink>
+        <HeaderLink class="border-r sm:border-r-0" href="/blog">
+          Blog
+        </HeaderLink>
         <HeaderLink href="/about">About</HeaderLink>
       </div>
       <button
@@ -46,24 +50,6 @@ import { SITE_TITLE } from "@/consts";
         </svg>
       </button>
     </nav>
-    <!-- End Desktop Nav -->
-    <!-- Mobile Nav -->
-    <!-- <nav class="flex h-12 items-center justify-between px-2 md:hidden">
-      <a class="font-mono" href="/">{SITE_TITLE}</a>
-      <div>
-        <div
-          class="fixed inset-0 bg-black/20 backdrop-blur-sm dark:bg-slate-900/80"
-        >
-        </div>
-        <div
-          class="dark:highlight-white/5 fixed right-4 top-4 w-full max-w-xs rounded-lg bg-white p-6 text-base font-semibold text-slate-900 shadow-lg dark:bg-slate-800 dark:text-slate-400"
-        >
-          <HeaderLink href="/">Home</HeaderLink>
-          <HeaderLink href="/blog">Blog</HeaderLink>
-          <HeaderLink href="/about">About</HeaderLink>
-        </div>
-      </div>
-    </nav> -->
   </header>
 </>
 
