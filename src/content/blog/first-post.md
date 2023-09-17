@@ -1,16 +1,58 @@
 ---
-title: "First post"
+title: "Custom GitHub Notifications in Slack with AWS Lambda & API Gateway"
 description: "Lorem ipsum dolor sit amet"
 pubDate: "Jul 08 2022"
 heroImage: "/blog-placeholder-3.jpg"
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+Custom GitHub Notifications in Slack with AWS Lambda & API Gateway
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+Why lambda for this usecase?
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+1. Create a Slack Incoming Webhook:
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
+- Visit https://yourworkspace.slack.com/apps/manage/custom-integrations.
+- Click on "Incoming Webhooks".
+- Click "Add to Slack".
+- Select a channel or create a new one for GitHub notifications.
+- Click on "Add Incoming WebHooks integration".
+- Copy the Webhook URL. You'll use this URL to post messages from AWS Lambda.
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+Issues: Slack apps instead of legacy integrations thing
+
+2. Set up an AWS Lambda function:
+
+- Navigate to the AWS Lambda service in your AWS Management Console.
+- Click "Create function".
+- Name your function, for example, "GitHubToSlack".
+- Choose a runtime (for instance, Python 3.x).
+- Create a new execution role with basic AWS Lambda permissions.
+- Add the following code as the Lambda function body (for Python):
+
+Issues: not all python packages available, don't want to deal with layers, just want to copy paste working code into aws console editor. Also, trouble receiving request headers in event payload.
+
+3. Set up API Gateway:
+
+- Navigate to the API Gateway service in your AWS Management Console.
+- Click "Create API".
+- Choose "REST API".
+- Click "Build".
+- Under "Actions", click "Create Resource".
+- Name it "webhook" or similar.
+- Once created, select "Create Method" > "POST".
+- For the integration type, select "Lambda Function" and choose the function you created earlier.
+- Deploy your API: From "Actions", select "Deploy API". Choose a new deployment stage or an existing one.
+- Note the "Invoke URL" – this is where GitHub will send its webhooks.
+
+Note: API Method Request settings has no auth, no api key, no validator, no specific params/headers/etc. Integration request is just lambda pointing at our lambda function with "Lambda proxy integration": true.
+
+4. Configure GitHub Webhook:
+
+- Go to the GitHub repository you want to monitor.
+- Navigate to Settings > Webhooks > "Add webhook".
+- Set the "Payload URL" to the "Invoke URL" you got from API Gateway.
+- Set the content type to "application/json".
+- Choose which events you'd like to be notified about.
+- Click "Add webhook".
+
+5. Add GH Secret to AWS Secrets Manager or Systems Manager Parameter Store
